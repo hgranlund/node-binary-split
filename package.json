@@ -1,0 +1,30 @@
+{
+  "name": "node-binary-split",
+  "version": "1.0.0",
+  "description": "A Transform Stream that splits a stream into chunks based on a delimiter",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hgranlund/node-binary-split.git"
+  },
+  "keywords": [
+    "stream",
+    "split",
+    "binary",
+    "fast",
+    "performance",
+    "delimiter"
+  ],
+  "author": "Simen Haugerud Granlund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hgranlund/node-binary-split/issues"
+  },
+  "homepage": "https://github.com/hgranlund/node-binary-split#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0"
+  }
+}
