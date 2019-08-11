@@ -2,7 +2,7 @@ var through = require('through2');
 
 function BinarySplit(splitOn = '\n') {
   if (!(this instanceof BinarySplit)) return new BinarySplit(splitOn);
-  const _splitOn = Buffer.from(splitOn || '\n');
+  const _splitOn = Buffer.from(splitOn);
   let buffered = [];
   const getBuffered = () => {
     if (buffered.length === 1) {
