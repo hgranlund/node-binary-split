@@ -16,7 +16,7 @@ describe('BinarySplit', () => {
       );
       expect(chuncks).toEqual(['aaa', 'bbb']);
     });
-    it('should split the stream into chunks based on a newlinr buffer delimiter', async () => {
+    it('should split the stream into chunks based on a newline buffer delimiter', async () => {
       const chuncks = await chunkCollector(
         intoStream('aaa\nbbb').pipe(split(Buffer.from('\n'))),
       );
@@ -34,6 +34,12 @@ describe('BinarySplit', () => {
       );
       expect(chuncks).toEqual(['aaa']);
     });
+    it('should use newline as default', async () => {
+      const chuncks = await chunkCollector(
+        intoStream('aaa\nbbb').pipe(split()),
+      );
+      expect(chuncks).toEqual(['aaa', 'bbb']);
+    });
     it('should handle new operator', async () => {
       const chuncks = await chunkCollector(
         intoStream('\naaa').pipe(new split('\n')),
@@ -45,12 +51,6 @@ describe('BinarySplit', () => {
         intoStream('aaa\nbbb').pipe(split()),
       );
       expect(chuncks).toEqual(['aaa', 'bbb']);
-    });
-    it('should handle multiple splits', async () => {
-      const chuncks = await chunkCollector(
-        intoStream('aaa\nbbb\nccc\nddd\neee').pipe(split('\n')),
-      );
-      expect(chuncks).toEqual(['aaa', 'bbb', 'ccc', 'ddd', 'eee']);
     });
     it('should handle multiple splits', async () => {
       const chunks = await chunkCollector(
