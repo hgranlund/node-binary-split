@@ -51,21 +51,21 @@ Benchmarking node-binary-split against other similar packages with benchmark.js.
 ```bash
 Split on a string:
 
-node-binary-split x 1,277 ops/sec ±7.12% (61 runs sampled)
-binary-split x 411 ops/sec ±6.51% (71 runs sampled)
-split x 567 ops/sec ±3.74% (72 runs sampled)
-split2 x 387 ops/sec ±5.00% (77 runs sampled)
-Fastest is node-binary-split!
+node-binary-split x 1,368 ops/sec ±3.68% (70 runs sampled)
+binary-split x 773 ops/sec ±2.75% (74 runs sampled)
+split x 504 ops/sec ±2.02% (75 runs sampled)
+split2 x 486 ops/sec ±1.95% (75 runs sampled)
+Fastest is node-binary-split
 ```
 
 ```bash
 Split on newline:
 
-node-binary-split x 1,186 ops/sec ±2.76% (72 runs sampled)
-binary-split x 755 ops/sec ±1.82% (75 runs sampled)
-split x 441 ops/sec ±2.89% (76 runs sampled)
-split2 x 432 ops/sec ±1.83% (78 runs sampled)
-Fastest is node-binary-split!
+node-binary-split x 1,682 ops/sec ±3.51% (72 runs sampled)
+binary-split x 472 ops/sec ±2.68% (76 runs sampled)
+split x 574 ops/sec ±3.34% (73 runs sampled)
+split2 x 477 ops/sec ±2.51% (77 runs sampled)
+Fastest is node-binary-split
 ```
 
 ## Development
