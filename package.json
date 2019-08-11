@@ -13,10 +13,10 @@
   "keywords": [
     "stream",
     "split",
+    "transform",
     "binary",
     "fast",
-    "performance",
-    "delimiter"
+    "performance"
   ],
   "author": "Simen Haugerud Granlund",
   "license": "MIT",
@@ -25,6 +25,14 @@
   },
   "homepage": "https://github.com/hgranlund/node-binary-split#readme",
   "devDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^6.1.0",
+    "benchmark": "^2.1.4",
+    "binary-split": "^1.0.5",
+    "jest": "^24.8.0",
+    "split": "^1.0.1",
+    "split2": "^3.1.1"
+  },
+  "dependencies": {
+    "through2": "^3.0.1"
   }
 }
