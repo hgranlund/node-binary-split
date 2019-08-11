@@ -2,9 +2,11 @@
   "name": "node-binary-split",
   "version": "1.0.0",
   "description": "A Transform Stream that splits a stream into chunks based on a delimiter",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./src ./tests --fix",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -25,9 +27,10 @@
   },
   "homepage": "https://github.com/hgranlund/node-binary-split#readme",
   "devDependencies": {
-    "eslint": "^6.1.0",
     "benchmark": "^2.1.4",
     "binary-split": "^1.0.5",
+    "coveralls": "^3.0.6",
+    "eslint": "^6.1.0",
     "jest": "^24.8.0",
     "split": "^1.0.1",
     "split2": "^3.1.1"

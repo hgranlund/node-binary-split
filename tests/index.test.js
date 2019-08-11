@@ -1,5 +1,6 @@
 const { intoStream, chunkCollector } = require('./testUtils');
-const split = require('../index');
+const split = require('../src/index');
+const { createReadStream, readFileSync } = require('fs');
 
 describe('BinarySplit', () => {
   describe('When a delimiter is provided', () => {
@@ -27,11 +28,33 @@ describe('BinarySplit', () => {
       );
       expect(chuncks).toEqual(['aaa']);
     });
+    it('should handle delimiter on at end', async () => {
+      const chuncks = await chunkCollector(
+        intoStream('aaa\n').pipe(split('\n')),
+      );
+      expect(chuncks).toEqual(['aaa']);
+    });
+    it('should handle new operator', async () => {
+      const chuncks = await chunkCollector(
+        intoStream('\naaa').pipe(new split('\n')),
+      );
+      expect(chuncks).toEqual(['aaa']);
+    });
     it('should handle multiple splits', async () => {
       const chuncks = await chunkCollector(
         intoStream('aaa\nbbb\nccc\nddd\neee').pipe(split('\n')),
       );
       expect(chuncks).toEqual(['aaa', 'bbb', 'ccc', 'ddd', 'eee']);
+    });
+    it('should handle multiple splits', async () => {
+      const chunks = await chunkCollector(
+        createReadStream('bench/loremIpsum.txt').pipe(split('\n')),
+      );
+      const expectedChunks = readFileSync('bench/loremIpsum.txt')
+        .toString()
+        .split('\n')
+        .filter(Boolean);
+      expect(chunks).toEqual(expectedChunks);
     });
   });
 });
