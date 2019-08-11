@@ -1,7 +1,7 @@
 const Benchmark = require('benchmark');
 const { devNullStream } = require('../tests/testUtils');
 const { createReadStream } = require('fs');
-const nodeBinarySplit = require('../index');
+const nodeBinarySplit = require('../src/index');
 const binarySplit = require('binary-split');
 const split = require('split');
 const split2 = require('split2');
@@ -12,7 +12,7 @@ const suite = new Benchmark.Suite();
 
 suite
   .add(
-    'nodeBinarySplit',
+    'node-binary-split',
     deferred => {
       const stream = testBuffer()
         .pipe(nodeBinarySplit('lorem'))

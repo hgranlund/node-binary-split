@@ -40,6 +40,12 @@ describe('BinarySplit', () => {
       );
       expect(chuncks).toEqual(['aaa']);
     });
+    it('should split the stream on a newline by default', async () => {
+      const chuncks = await chunkCollector(
+        intoStream('aaa\nbbb').pipe(split()),
+      );
+      expect(chuncks).toEqual(['aaa', 'bbb']);
+    });
     it('should handle multiple splits', async () => {
       const chuncks = await chunkCollector(
         intoStream('aaa\nbbb\nccc\nddd\neee').pipe(split('\n')),

@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint ./src ./tests --fix",
+    "bench": "node bench/benchmark.js; node bench/benchmark-string.js",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
