@@ -1,6 +1,6 @@
 {
   "name": "node-binary-split",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Transform Stream that splits a stream into chunks based on a delimiter",
   "main": "src/index.js",
   "scripts": {
@@ -13,13 +13,18 @@
     "type": "git",
     "url": "git+https://github.com/hgranlund/node-binary-split.git"
   },
+  "files": [
+    "src"
+  ],
   "keywords": [
     "stream",
     "split",
     "transform",
     "binary",
     "fast",
-    "performance"
+    "performance",
+    "delimiter",
+    "separator"
   ],
   "author": "Simen Haugerud Granlund",
   "license": "MIT",
