@@ -1,6 +1,6 @@
 {
   "name": "node-binary-split",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Transform Stream that splits a stream into chunks based on a delimiter",
   "main": "src/index.js",
   "scripts": {
@@ -35,13 +35,14 @@
   "devDependencies": {
     "benchmark": "^2.1.4",
     "binary-split": "^1.0.5",
-    "coveralls": "^3.0.6",
-    "eslint": "^6.1.0",
-    "jest": "^24.8.0",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "jest": "^24.9.0",
     "split": "^1.0.1",
     "split2": "^3.1.1"
   },
   "dependencies": {
+    "stream-split": "^1.1.0",
     "through2": "^3.0.1"
   },
   "engines": {
