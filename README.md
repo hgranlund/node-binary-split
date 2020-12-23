@@ -17,29 +17,38 @@ npm install node-binary-split --save
 
 ## Usage
 
-```js
-const split = require('node-binary-split');
+```ts
+import split from 'node-binary-split';
 
 split(delimiter);
 ```
 
 or
 
-```js
-const Split = require('node-binary-split');
+```ts
+import { BinarySplit } from 'node-binary-split';
 
-new Split(delimiter);
+new BinarySplit(delimiter);
 ```
 
 delimiter can be a string or a buffer.
 
 ### Sample
 
+```ts
+import {BinarySplit } = from 'node-binary-split';
+fs.createReadStream(file)
+  .pipe(new BinarySplit('\n'))
+  .on('data', function(line) {
+    //each chunk now is a separate line!
+  });
+```
+
 ```javascript
 const split = require('node-binary-split');
 fs.createReadStream(file)
   .pipe(split('\n'))
-  .on('data', function(line) {
+  .on('data', function (line) {
     //each chunk now is a separate line!
   });
 ```

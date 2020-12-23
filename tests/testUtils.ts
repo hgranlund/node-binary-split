@@ -1,21 +1,19 @@
-const { Readable, Writable } = require('stream');
+import { Readable, ReadableOptions, Writable } from 'stream';
 
-const devNullStream = () =>
-  Writable({
+export const devNullStream = (): Writable =>
+  new Writable({
     write(chunk, encoding, done) {
       setImmediate(done);
     },
   });
 
-const intoStream = (obj, options) => {
+export const intoStream = (obj: any, options?: ReadableOptions): Readable => {
   const values = Array.isArray(obj) ? Array.from(obj) : [obj];
   const stream = new Readable({
     ...options,
     read() {
       if (values.length > 10) {
-        Array(10)
-          .fill()
-          .map(() => this.push(values.shift()));
+        Array(10).map(() => this.push(values.shift()));
       } else if (values.length) {
         this.push(values.shift());
       } else {
@@ -26,23 +24,18 @@ const intoStream = (obj, options) => {
   return stream;
 };
 
-const chunkCollector = stream => {
+export const chunkCollector = (stream) => {
   return new Promise((resolve, reject) => {
-    let chunks = [];
+    const chunks = [] as string[];
     stream
-      .on('readable', () => {
-        let data;
-        while ((data = stream.read())) {
-          chunks.push(data.toString());
-        }
+      .on('data', (data) => {
+        chunks.push(data.toString());
       })
       .on('end', () => {
         resolve(chunks);
       })
-      .on('error', error => {
+      .on('error', (error) => {
         reject(error);
       });
   });
 };
-
-module.exports = { intoStream, chunkCollector, devNullStream };
