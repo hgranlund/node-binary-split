@@ -3,7 +3,8 @@ import { Transform, TransformCallback, TransformOptions } from 'stream';
 export class BinarySplit extends Transform {
   splitOn: Buffer;
   buffered = [] as Buffer[];
-  constructor(splitOn = '\n' as string | Buffer, opt?: TransformOptions) {
+  pending = [] as Buffer[];
+  constructor (splitOn = '\n' as string | Buffer, opt?: TransformOptions) {
     super(opt);
     if (typeof splitOn === 'string') {
       this.splitOn = Buffer.from(splitOn);
@@ -12,7 +13,7 @@ export class BinarySplit extends Transform {
     }
   }
 
-  getBuffered(): Buffer {
+  getBuffered (): Buffer {
     if (this.buffered.length === 1) {
       return this.buffered.pop();
     } else {
@@ -21,24 +22,31 @@ export class BinarySplit extends Transform {
       return buf;
     }
   }
+  getPending (): Buffer {
+    return Buffer.concat(this.pending)
+  }
 
-  _transform(chunk: Buffer, encoding: string, done: TransformCallback): void {
+  _transform (chunk: Buffer, encoding: string, done: TransformCallback): void {
     let offset = 0;
-    while (offset < chunk.length) {
-      const splitAt = chunk.indexOf(this.splitOn, offset);
+    let splitAt = 0;
+    this.pending.push(chunk);
+    while (offset < this.getPending().length) {
+      splitAt = this.getPending().indexOf(this.splitOn, offset);
       if (splitAt === -1) {
-        this.buffered.push(chunk.slice(offset));
-        offset = chunk.length;
+        this.buffered.push(this.getPending().slice(offset));
+        offset = this.getPending().length;
       } else {
-        this.buffered.push(chunk.slice(offset, splitAt));
-        this.push(this.getBuffered());
+        this.push(this.getPending().slice(offset, splitAt));
+        this.buffered = []
+
         offset = splitAt + this.splitOn.length;
       }
     }
+    if (splitAt > 0) { this.pending = [] }
     done();
   }
 
-  _flush(done: TransformCallback): void {
+  _flush (done: TransformCallback): void {
     if (this.buffered.length) {
       this.push(this.getBuffered());
     }
