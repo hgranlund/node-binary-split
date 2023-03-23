@@ -29,6 +29,7 @@ export class BinarySplit extends Transform {
   _transform (chunk: Buffer, encoding: string, done: TransformCallback): void {
     let offset = 0;
     let splitAt = 0;
+    let found = 0;
     this.pending.push(chunk);
     while (offset < this.getPending().length) {
       splitAt = this.getPending().indexOf(this.splitOn, offset);
@@ -40,9 +41,14 @@ export class BinarySplit extends Transform {
         this.buffered = []
 
         offset = splitAt + this.splitOn.length;
+       found = offset 
       }
     }
-    if (splitAt > 0) { this.pending = [] }
+    if (found > 0) { 
+      const pending = this.getPending().slice(found)
+      this.pending = [] 
+      this.pending.push(pending)
+    }
     done();
   }
 
