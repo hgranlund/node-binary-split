@@ -1,5 +1,7 @@
 import { createReadStream, readFileSync } from 'fs';
 import 'jest';
+import { Readable, Transform } from 'stream';
+import { pipeline } from 'stream/promises';
 import split, { BinarySplit } from '../src/index';
 import { chunkCollector, intoStream } from './testUtils';
 
@@ -57,5 +59,40 @@ describe('BinarySplit', () => {
         .filter(Boolean);
       expect(chunks).toEqual(expectedChunks);
     });
+    it('should find delimiter between chunks', async () => {
+      const mockReadStream = () => {
+        const readable = new Readable({
+          read () { },
+        });
+
+        readable.push('aaa--cust')
+        readable.push('om--bbb')
+
+        readable.push(null)
+        return readable;
+      };
+
+      const dataParser = new Transform({
+        objectMode: true,
+        transform (chunk, enc, callback) {
+          return callback(null, chunk.toString());
+        }
+      })
+
+      const ids = []
+      const chuncks = await pipeline(
+        mockReadStream(),
+        new BinarySplit('--custom--'),
+        dataParser,
+        async function* (source) {
+          for await (const data of source) {
+            ids.push(data)
+            yield data
+          }
+        }
+      )
+      expect(ids).toEqual(['aaa', 'bbb']);
+    });
+
   });
 });
