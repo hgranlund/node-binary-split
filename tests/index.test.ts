@@ -25,6 +25,18 @@ describe('BinarySplit', () => {
       );
       expect(chuncks).toEqual(['aaa', 'bbb']);
     });
+    it('issue#13: We should handle if delimiter is separated in two chunks', async () => {
+      const chuncks = await chunkCollector(
+        intoStream(['AAA--CUST', 'OM--BBB']).pipe(new BinarySplit('--CUSTOM--'))
+      );
+      expect(chuncks).toEqual(['AAA', 'BBB']);
+    });
+    it('issue#13:  We should handle if delimiter is separated in three chunks', async () => {
+      const chuncks = await chunkCollector(
+        intoStream(['AAA--CU','ST', 'OM--BBB']).pipe(new BinarySplit('--CUSTOM--'))
+      );
+      expect(chuncks).toEqual(['AAA', 'BBB']);
+    });
     it('should handle delimiter on at 0', async () => {
       const chuncks = await chunkCollector(
         intoStream('\naaa').pipe(split('\n'))

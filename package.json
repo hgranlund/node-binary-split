@@ -1,6 +1,6 @@
 {
   "name": "node-binary-split",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Transform Stream that splits a stream into chunks based on a delimiter",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
